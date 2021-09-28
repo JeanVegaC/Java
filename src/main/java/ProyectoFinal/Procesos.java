@@ -28,8 +28,17 @@ public void crearCuenta(String dni,String nombre, String apellido, int edad,int 
      fin=fin.getSiguiente();  
   }
 }    
-    
-public String mostrar(){
+  
+public Nodo encontrar(String dni){
+    Nodo tmp=inicio;
+    while(!tmp.getDni().equalsIgnoreCase(dni)){
+      tmp=tmp.getSiguiente();  
+    }
+    return tmp;
+}
+
+
+public String mostrar(){    //MOSTRAR TODOS LOS OBJETOS, NO UTILIZADO
    Nodo tmp=inicio;
    while(tmp!=null){
       return "DNI: "+tmp.getDni()+" Libro: "+tmp.getLibro();
@@ -52,10 +61,9 @@ return "BIENVENIDO\n"
 
 
 public String menuBiblioteca(String dni){
-    Nodo tmp=inicio;
-    while(!tmp.getDni().equalsIgnoreCase(dni)){
-      tmp=tmp.getSiguiente();  
-    }
+    
+    Nodo tmp=encontrar(dni);
+    
     return "BIENVENIDO "+tmp.getNombre()+" "+tmp.getApellido()+"\n"
             + "***********************************\n"
             + "¿ Que opción deseas realizar ?\n"
@@ -69,37 +77,40 @@ public String menuBiblioteca(String dni){
 
 public String misLibros(String dni){
     int cont=0;
-    Nodo tmp=inicio;
-    while(!tmp.getDni().equalsIgnoreCase(dni)){
-      tmp=tmp.getSiguiente();  
-    }
+    Nodo tmp=encontrar(dni);
     return "Hola "+tmp.getNombre()+" "+tmp.getApellido()+"\n"
             + "*********************\n"
             + "Estos son tus libros prestados:\n"
             + tmp.getLibro()+""
             + "\n"
             + "\nLibros prestados: "+tmp.getCont();
-}    
+}  
+
+
+public String regresarLibros(){
+    return "¿ De que forma desea regresar los libros ?\n"
+                                            + "***********************************\n"
+                                            + "1.- Todos los prestados\n"
+                                            + "2.- Por unidad\n"
+                                            + "3.- Atras ";
+}
     
 public void alquilarLibro(String dni,String libro){
-    Nodo tmp=inicio;
-    while(!tmp.getDni().equalsIgnoreCase(dni)){
-      tmp=tmp.getSiguiente();  
-    }
+   
+    Nodo tmp=encontrar(dni);
     
     Libros=tmp.getLibro()+"\n"+"* "+libro;
     tmp.setLibro(Libros);
     tmp.setCont(tmp.getCont()+1);
     
-}    
+}  
+
+
 
 public String mensajeAlquilarLibro(String dni,String libro){
-    Nodo tmp=inicio;
-    while(!tmp.getDni().equalsIgnoreCase(dni)){
-      tmp=tmp.getSiguiente();  
-    }
     
-    
+    Nodo tmp=encontrar(dni);
+ 
    return "GRACIAS POR ALQUILAR EL LIBRO: "+" "+libro+"\n"
            + "*************************************\n"
             + "Editorial : Universidad Cesar Vallejo\n"
@@ -113,10 +124,8 @@ public String mensajeAlquilarLibro(String dni,String libro){
     
 public void regresarLibro(String dni,String libro){
     
-    Nodo tmp=inicio;
-    while(!tmp.getDni().equalsIgnoreCase(dni)){
-      tmp=tmp.getSiguiente();  
-    }
+    Nodo tmp=encontrar(dni);
+    
     if (libro.equalsIgnoreCase("todos")) {
         tmp.setLibro("");
         tmp.setCont(0);
@@ -126,13 +135,18 @@ public void regresarLibro(String dni,String libro){
     String nueva=tmp.getLibro();
     String z=nueva.replace("\n* "+libro,"");
     tmp.setLibro(z);
-    tmp.setCont(tmp.getCont()-1);
-    }
-   
+        if (tmp.getCont()==0) {
+            tmp.setCont(0);
+        }else tmp.setCont(tmp.getCont()-1);
     
+    }
     
 }    
-    
+
+  public int regresarContLibros(String dni){
+    Nodo tmp=encontrar(dni);
+    return tmp.getCont();  
+  }  
     
     
     
