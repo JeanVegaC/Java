@@ -26,16 +26,21 @@ public class Main {
                                 break;
                             case 2: //MENU BIBLIOTECA - CASO 2 - ALQUILAR LIBRO
                                 libro = JOptionPane.showInputDialog("¿Ingrese el nombre del libro a prestar?");
+                                if (libro==null||libro.equalsIgnoreCase("")) {
+                                    JOptionPane.showMessageDialog(null,"Libro invalido");
+                                    break;
+                                }
                                 oli.alquilarLibro(dni, libro);
                                 JOptionPane.showMessageDialog(null, oli.mensajeAlquilarLibro(dni, libro));
                                 break;
                             case 3: //MENU BIBLIOTECA - CASO 3 - REGRESAR LIBRO
+                                if (oli.regresarContLibros(dni)==0) {
+                                        JOptionPane.showMessageDialog(null,"No tienes libros prestados");
+                                }else{
+                                  
+                                
                                 do {
-                                    opc = Integer.parseInt(JOptionPane.showInputDialog("¿ De que forma desea regresar los libros ?\n"
-                                            + "***********************************\n"
-                                            + "1.- Todos los prestados\n"
-                                            + "2.- Por unidad\n"
-                                            + "3.- Atras "));
+                                    opc = Integer.parseInt(JOptionPane.showInputDialog(oli.regresarLibros()));
 
                                     switch (opc) {
 
@@ -50,6 +55,10 @@ public class Main {
                                         case 3:
                                             break;
                                     }
+                                    if (opc==1) {
+                                        break;
+                                    }
+                                    
                                     if (opc == 2) {
                                         opv = JOptionPane.showConfirmDialog(null, "¿ Desea regresar otro libro ?", "YES_NO_OPTION", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                                         if (opv == 1) {
@@ -58,13 +67,16 @@ public class Main {
                                     }
 
                                 } while (opc != 3);
-                                break;
+                                break;  
+                                }
+                                
 
                         }
 
                     } while (opc != 4);
 
                     break;
+                    
 
                 case 2:     //MENU PRINCIPAL - CASO 2 - CREAR CUENTA
                     dni = JOptionPane.showInputDialog("Ingresar DNI");
@@ -82,16 +94,20 @@ public class Main {
                                 break;
                             case 2: //MENU BIBLIOTECA - CASO 2 - ALQUILAR LIBRO
                                 libro = JOptionPane.showInputDialog("¿Ingrese el nombre del libro a prestar?");
+                                if (libro==null||libro.equalsIgnoreCase("")) {
+                                    JOptionPane.showMessageDialog(null,"Libro invalido");
+                                    break;
+                                }
                                 oli.alquilarLibro(dni, libro);
                                 JOptionPane.showMessageDialog(null, oli.mensajeAlquilarLibro(dni, libro));
                                 break;
                             case 3: //MENU BIBLIOTECA - CASO 3 - REGRESAR LIBRO
+                              if (oli.regresarContLibros(dni)==0) {
+                                        JOptionPane.showMessageDialog(null,"No tienes libros prestados");
+                                }else{
+                                  
                                 do {
-                                    opc = Integer.parseInt(JOptionPane.showInputDialog("¿ De que forma desea regresar los libros ?\n"
-                                            + "***********************************\n"
-                                            + "1.- Todos los prestados\n"
-                                            + "2.- Por unidad\n"
-                                            + "3.- Atras "));
+                                    opc = Integer.parseInt(JOptionPane.showInputDialog(oli.regresarLibros()));
 
                                     switch (opc) {
 
@@ -116,6 +132,10 @@ public class Main {
 
                                 } while (opc != 3);
                                 break;
+                              }
+                                
+                            
+                                
 
                         }
 
